@@ -1,6 +1,6 @@
 'use strict';
 (async function(){
- const response=await fetch('ru-map.json?v=tools1');if(!response.ok)return;
+ const response=await fetch('ru-map.json?v=lab1');if(!response.ok)return;
  const dictionary=await response.json();const normalize=s=>s.replace(/\s+/g,' ').trim();const lookup=new Map(Object.entries(dictionary).map(([k,v])=>[normalize(k),v]));
  const phrases=[...lookup.entries()].filter(([k,v])=>k.length>=14&&k!==v).sort((a,b)=>b[0].length-a[0].length);
  let language='kk';try{if(localStorage.getItem('bioenglish-language')==='ru')language='ru';}catch{}
