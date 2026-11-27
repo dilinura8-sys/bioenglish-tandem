@@ -1,6 +1,6 @@
 'use strict';
 (async function(){
- const response=await fetch('ru-map.json?v=ru1');if(!response.ok)return;
+ const response=await fetch('ru-map.json?v=tools1');if(!response.ok)return;
  const dictionary=await response.json();const normalize=s=>s.replace(/\s+/g,' ').trim();const lookup=new Map(Object.entries(dictionary).map(([k,v])=>[normalize(k),v]));
  const phrases=[...lookup.entries()].filter(([k,v])=>k.length>=14&&k!==v).sort((a,b)=>b[0].length-a[0].length);
  let language='kk';try{if(localStorage.getItem('bioenglish-language')==='ru')language='ru';}catch{}
@@ -23,7 +23,7 @@
  if(result===key)return text;const leading=text.match(/^\s*/)[0],trailing=text.match(/\s*$/)[0];return leading+result+trailing;
  }
  const switcher=document.createElement('div');switcher.className='language-switch';switcher.setAttribute('role','group');switcher.innerHTML='<button type="button" data-language="kk" lang="kk">Қазақша</button><button type="button" data-language="ru" lang="ru">Русский</button>';document.body.append(switcher);
- function eligible(element){return element&&!element.closest('script,style,textarea,[contenteditable="true"],.language-switch');}
+ function eligible(element){return element&&!element.closest('script,style,textarea,[contenteditable="true"],[data-user-text],.language-switch');}
  function apply(){scheduled=false;observer.disconnect();
   const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;
   while((node=walker.nextNode())){if(!eligible(node.parentElement))continue;let record=origins.get(node);if(!record||node.nodeValue!==record.last)record={kk:node.nodeValue};const target=language==='ru'?(node.parentElement.matches('.cinema-numbers a[href="#cases"] span')?'Жизненных кейсов':translate(record.kk)):record.kk;if(node.nodeValue!==target)node.nodeValue=target;record.last=target;origins.set(node,record);}
